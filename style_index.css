@@ -1,0 +1,79 @@
+/*Palette : #2C3333, #2E4F4F,#0E8388,#CBE4DE*/
+
+
+body {
+
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: #2C3333;
+
+}
+
+p1 {
+    font-family: Consolas, monaco, monospace;
+    position: relative;
+    color: #CBE4DE;
+    margin: 5px;
+    margin-left: 20px;
+    padding: 0;
+    border: 0;
+    float: left;
+    width: auto;
+    font-size: 150%;
+}
+
+button {
+    font-family: Consolas, monaco, monospace;
+    margin: 0px;
+    margin-left: 20px;
+    padding: 5px;
+    border: 0;
+    float: left;
+    box-sizing: border-box;
+
+    color: #CBE4DE;
+    background-color: transparent;
+    font-size: 150%;
+
+
+}
+
+button:hover {
+    background-color: #2E4F4F;
+}
+
+.soustitre {
+    font-family: Consolas, monaco, monospace;
+    color: #CBE4DE;
+    text-align: center;
+
+}
+
+pre {
+    margin: 10%;
+    margin-bottom: 2%;
+    text-align: center;
+    color: #CBE4DE;
+    font-size: 200%;
+}
+
+header {
+    display: flex;
+}
+
+main {
+    margin: auto;
+}
+
+p {
+    color: #2E4F4F;
+
+}
+
+.footer {
+    position: fixed;
+    right: 15px;
+    bottom: 0;
+    text-align: left;
+}
