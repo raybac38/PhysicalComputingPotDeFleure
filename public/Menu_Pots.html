@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Pots</title>
+    <link rel="stylesheet" href="./style_menu_pots.css">
+    <script src="./script_index.js"></script>
+</head>
+
+<body>
+    <header>
+        <button onclick="Charger_menu_principale()">Terra-Pilot</button>
+        <button onclick="Charger_menu_pots()">Mon pot</button>
+    </header>
+
+
+    <div id="thermometre_containeur">
+        <pre id="thermometre_ascii_art">
+        </pre>
+    </div>
+
+    <div id="brightness_containeur">
+        <pre id="brightness_ascii_art">
+        </pre>
+    </div>
+
+    <div id="air_humidity_containeur">
+        <pre id="air_humidity_ascii_art"></pre>
+    </div>
+
+    <div id="dirt_humidity_containeur">
+        <pre id="dirt_humidity_ascii_art"></pre>
+    </div>
+
+    <div id="flower_container">
+        <pre id="flower_ascii_art"></pre>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            load();
+        });
+    </script>
+
+</body>
+
+</html>
