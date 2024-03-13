@@ -2,7 +2,7 @@
   "name": "pot_de_fleur",
   "version": "1.0.0",
   "description": "",
-  "main": "script_index.js",
+  "main": "scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

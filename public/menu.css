@@ -1,0 +1,108 @@
+
+/*Nouvelle palette https://coolors.co/palette/84a98c-52796f-354f52-29363D-222B2F */
+
+body {
+    background-color: #222B2F;
+    margin: 0px;
+    color: #84a98c;
+    font-family: monaco, monospace;
+
+}
+
+button {
+    font-family: monaco, monospace;
+    
+    border: 0;
+    color: #84a98c;
+    background-color: transparent;
+    font-size: 150%;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    border-radius: 6px;
+    margin-right: 10px;
+
+
+}
+
+
+button:hover {
+    background-color: #354f52;
+}
+
+.text_centered {
+    text-align: center;
+}
+
+.titre{
+    font-size: 200%;
+    margin-top: 10%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+
+header {
+    padding: 5px;
+    display: flex;
+    background-color: #29363D;
+    box-shadow: 0px 1px 1px #29363D;
+}
+
+/*    */ 
+.footer {
+    position: fixed;
+    right: 15px;
+    bottom: 0;
+}.container{
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 1%;
+}
+
+
+.box {
+    margin: 10px;
+    
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #84a98c;
+
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #29363D;
+    box-shadow: 8px 8px 1px #354f52;
+}
+
+.size-1-1 {
+    width: 180px;
+    height: 180px;
+}
+
+.size-1-2 {
+    width: 180px;
+    height: 380px;
+
+}
+
+.ascii
+{
+    white-space: pre;
+    font-size: 80%;
+    
+}
+#thermometre
+{
+
+}
+#brightness
+{
+    
+}
