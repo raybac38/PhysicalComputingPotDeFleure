@@ -1,8 +1,10 @@
 //PIN assignment
-int PIN_LUM = A0;
-int PIN_TEMP = A1;
+int PIN_LUM = A1;
+int PIN_TEMP = A0;
 int PIN_HUM_AIR = A2;
 int PIN_HUM_TERRE = A3;
+
+int MOTEUR = 13;
 
 #define PIN_SCE 12
 #define PIN_RESET 11
@@ -119,6 +121,9 @@ static const byte ASCII[][5] = {
 void setup() {
   LCDInit();
   Serial.begin(9600);
+  pinMode(PIN_TEMP, INPUT);
+  pinMode(PIN_LUM, INPUT);
+  pinMode(PIN_HUM_AIR, INPUT);
 }
 
 float temperature = 0; // compris entre -9 et 91°C
@@ -126,21 +131,21 @@ byte luminosity = 0; // compris entre 0 et 3 UA
 byte air_humidity = 0; //valeur relative sur /255 (%)
 byte floor_humidity = 0; //valeur relative sur /255 (%)
 
-
-
-
 void loop() {
-  if(Serial.available() > 0)
-  {
-    //Un serial est valide et connecté, passer en mode en ligne
+  
+    MesurerTemperature();
+    delay(200);
+    MesurerLumiere();
+    delay(1000);
+    //digitalWrite(MOTEUR, HIGH);
+    MesurerHumidityAir();
+    delay(200);
+    MesurerHumidityTerre();
+    delay(1000);
+    //digitalWrite(MOTEUR, LOW);
+    
 
-  }
-  else
-  {
-    //Aucun serial connecter, mode hors ligne
-    //Activation de l'écran et animation
-
-  }
+  
 }
 
 
@@ -149,7 +154,10 @@ void loop() {
 void MesurerTemperature()
 {
   int VAL = analogRead(PIN_TEMP);
-  temperature = 0.1f * VAL - 9;
+  temperature = (float)VAL / (float)10 - 9;  
+  Serial.print("temperature:");
+  Serial.println(temperature);
+  delay(100);
 }
 
 //// Quantification de la luminositee de manière quadratique en 4 niveau
@@ -173,16 +181,37 @@ void MesurerLumiere()
   {
     luminosity = 3;
   }
+
+  Serial.print("light level:");
+  Serial.println(luminosity);
+
+  delay(10);
 }
 
 void MesurerHumidityAir()
 {
-  
+ 
+  int VAL = analogRead(PIN_HUM_AIR);
+
+  Serial.println(VAL);
+
+  int humidity = get_humidity(temperature, VAL);
+
+  Serial.println(humidity);
+
+  Serial.print("air humidity:");
+  Serial.println(humidity);
+  delay(10);
 }
 
 void MesurerHumidityTerre()
 {
 
+  int VAL = analogRead(PIN_HUM_TERRE);
+  float valeur = VAL / 1024;
+  Serial.print("dirt humidity:");
+  Serial.println(valeur);
+  delay(10);
 }
 
 
@@ -243,4 +272,356 @@ void LCDWrite(byte data_or_command, byte data) {
   digitalWrite(PIN_SCE, LOW);
   shiftOut(PIN_SDIN, PIN_SCLK, MSBFIRST, data);
   digitalWrite(PIN_SCE, HIGH);
+}
+
+
+int get_humidity(float temp, int V) 
+{
+  int RH = 0;
+  if (temp < 5) {
+    if (V < 10){
+        RH = 30;
+    } else if (V < 19) {
+        RH = 35;
+    } else if (V < 72) {
+        RH = 40;
+    } else if (V < 128) {
+        RH = 45;
+    } else if (V < 221) {
+        RH = 50;
+    } else if (V < 345) { 
+        RH = 55;
+    } else if (V < 473) {
+        RH = 60;
+    } else if (V < 606) {
+        RH = 65;
+    } else if (V < 772) {
+        RH = 70;
+    } else if (V < 794) {
+        RH = 75;
+    } else if (V < 864) {
+        RH = 80;
+    } else if (V < 910) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 10) {
+    if (V < 5) {
+        RH = 25;
+    } else if (V < 11){
+        RH = 30;
+    } else if (V < 27) {
+        RH = 35;
+    } else if (V < 99) {
+        RH = 40;
+    } else if (V < 172) {
+        RH = 45;
+    } else if (V < 276) {
+        RH = 50;
+    } else if (V < 411) { 
+        RH = 55;
+    } else if (V < 547) {
+        RH = 60;
+    } else if (V < 671) {
+        RH = 65;
+    } else if (V < 772) {
+        RH = 70;
+    } else if (V < 841) {
+        RH = 75;
+    } else if (V < 892) {
+        RH = 80;
+    } else if (V < 933) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 15) {
+    if (V < 7) {
+        RH = 25;
+    } else if (V < 17){
+        RH = 30;
+    } else if (V < 38) {
+        RH = 35;
+    } else if (V < 127) {
+        RH = 40;
+    } else if (V < 211) {
+        RH = 45;
+    } else if (V < 325) {
+        RH = 50;
+    } else if (V < 473) { 
+        RH = 55;
+    } else if (V < 606) {
+        RH = 60;
+    } else if (V < 713) {
+        RH = 65;
+    } else if (V < 805) {
+        RH = 70;
+    } else if (V < 864) {
+        RH = 75;
+    } else if (V < 910) {
+        RH = 80;
+    } else if (V < 944) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 20) {
+    if (V < 5) {
+        RH = 20;
+    } else if (V < 10) {
+        RH = 25;
+    } else if (V < 23){
+        RH = 30;
+    } else if (V < 51) {
+        RH = 35;
+    } else if (V < 164) {
+        RH = 40;
+    } else if (V < 263) {
+        RH = 45;
+    } else if (V < 386) {
+        RH = 50;
+    } else if (V < 531) { 
+        RH = 55;
+    } else if (V < 655) {
+        RH = 60;
+    } else if (V < 761) {
+        RH = 65;
+    } else if (V < 841) {
+        RH = 70;
+    } else if (V < 893) {
+        RH = 75;
+    } else if (V < 931) {
+        RH = 80;
+    } else if (V < 953) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 25) {
+    if (V < 8) {
+        RH = 20;
+    } else if (V < 16) {
+        RH = 25;
+    } else if (V < 30){
+        RH = 30;
+    } else if (V < 62) {
+        RH = 35;
+    } else if (V < 208) {
+        RH = 40;
+    } else if (V < 316) {
+        RH = 45;
+    } else if (V < 451) {
+        RH = 50;
+    } else if (V < 593) { 
+        RH = 55;
+    } else if (V < 704) {
+        RH = 60;
+    } else if (V < 794) {
+        RH = 65;
+    } else if (V < 867) {
+        RH = 70;
+    } else if (V < 906) {
+        RH = 75;
+    } else if (V < 944) {
+        RH = 80;
+    } else if (V < 968) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 30) {
+    if (V < 11) {
+        RH = 20;
+    } else if (V < 22) {
+        RH = 25;
+    } else if (V < 41){
+        RH = 30;
+    } else if (V < 82) {
+        RH = 35;
+    } else if (V < 255) {
+        RH = 40;
+    } else if (V < 375) {
+        RH = 45;
+    } else if (V < 512) {
+        RH = 50;
+    } else if (V < 655) { 
+        RH = 55;
+    } else if (V < 751) {
+        RH = 60;
+    } else if (V < 794) {
+        RH = 65;
+    } else if (V < 887) {
+        RH = 70;
+    } else if (V < 928) {
+        RH = 75;
+    } else if (V < 955) {
+        RH = 80;
+    } else if (V < 975) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 35) {
+    if (V < 14) {
+        RH = 20;
+    } else if (V < 27) {
+        RH = 25;
+    } else if (V < 54){
+        RH = 30;
+    } else if (V < 107) {
+        RH = 35;
+    } else if (V < 303) {
+        RH = 40;
+    } else if (V < 427) {
+        RH = 45;
+    } else if (V < 569) {
+        RH = 50;
+    } else if (V < 704) { 
+        RH = 55;
+    } else if (V < 782) {
+        RH = 60;
+    } else if (V < 860) {
+        RH = 65;
+    } else if (V < 906) {
+        RH = 70;
+    } else if (V < 939) {
+        RH = 75;
+    } else if (V < 962) {
+        RH = 80;
+    } else if (V < 980) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 40) {
+    if (V < 17) {
+        RH = 20;
+    } else if (V < 36) {
+        RH = 25;
+    } else if (V < 70){
+        RH = 30;
+    } else if (V < 128) {
+        RH = 35;
+    } else if (V < 354) {
+        RH = 40;
+    } else if (V < 477) {
+        RH = 45;
+    } else if (V < 606) {
+        RH = 50;
+    } else if (V < 741) { 
+        RH = 55;
+    } else if (V < 829) {
+        RH = 60;
+    } else if (V < 880) {
+        RH = 65;
+    } else if (V < 918) {
+        RH = 70;
+    } else if (V < 949) {
+        RH = 75;
+    } else if (V < 968) {
+        RH = 80;
+    } else if (V < 983) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 45) {
+    if (V < 23) {
+        RH = 20;
+    } else if (V < 48) {
+        RH = 25;
+    } else if (V < 89) {
+        RH = 30;
+    } else if (V < 167) {
+        RH = 35;
+    } else if (V < 417) {
+        RH = 40;
+    } else if (V < 526) {
+        RH = 45;
+    } else if (V < 647) {
+        RH = 50;
+    } else if (V < 782) { 
+        RH = 55;
+    } else if (V < 854) {
+        RH = 60;
+    } else if (V < 892) {
+        RH = 65;
+    } else if (V < 927) {
+        RH = 70;
+    } else if (V < 955) {
+        RH = 75;
+    } else if (V < 973) {
+        RH = 80;
+    } else if (V < 987) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else if (temp < 50) {
+    if (V < 29) {
+        RH = 20;
+    } else if (V < 59) {
+        RH = 25;
+    } else if (V < 116) {
+        RH = 30;
+    } else if (V < 212) {
+        RH = 35;
+    } else if (V < 465) {
+        RH = 40;
+    } else if (V < 563) {
+        RH = 45;
+    } else if (V < 663) {
+        RH = 50;
+    } else if (V < 817) { 
+        RH = 55;
+    } else if (V < 880) {
+        RH = 60;
+    } else if (V < 907) {
+        RH = 65;
+    } else if (V < 939) {
+        RH = 70;
+    } else if (V < 966) {
+        RH = 75;
+    } else if (V < 982) {
+        RH = 80;
+    } else if (V < 992) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+} else { // Températures >= 50 dernière colonne du tableau
+    if (V < 35) {
+        RH = 20;
+    } else if (V < 70) {
+        RH = 25;
+    } else if (V < 139) {
+        RH = 30;
+    } else if (V < 250) {
+        RH = 35;
+    } else if (V < 531) {
+        RH = 40;
+    } else if (V < 606) {
+        RH = 45;
+    } else if (V < 713) {
+        RH = 50;
+    } else if (V < 841) { 
+        RH = 55;
+    } else if (V < 894) {
+        RH = 60;
+    } else if (V < 924) {
+        RH = 65;
+    } else if (V < 953) {
+        RH = 70;
+    } else if (V < 973) {
+        RH = 75;
+    } else if (V < 989) {
+        RH = 80;
+    } else if (V < 1000) {
+        RH = 85;
+    } else {
+        RH = 90;
+    }
+}
+return RH;
 }

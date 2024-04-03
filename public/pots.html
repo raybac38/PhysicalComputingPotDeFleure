@@ -17,19 +17,29 @@
     </header>
 
     <div class="container ascii">
-        <div class="box size-1-2"><div id="thermometre"></div>
+        <div class="box size-1-2">
+            <div id="thermometre"></div>
+            <div id="temperature_value"></div>
         </div>
-        <div class="box size-1-1"><div id="brightness"></div>
+        <div class="box size-1-1">
+            <div id="brightness"></div>
         </div>
-        <div class="box size-1-1"></div>
+        <div class="box size-1-1">
+            <div id="air_humidity"></div>
+            <div id="air_humidity_value"></div>
+        </div>
+        <div class="box size-1-1">
+            <div id="dirt_humidity"></div>
+            <div id="dirt_humidity_value"></div>
+        </div>
         <div class="box"></div>
-        
+
     </div>
-    
+
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             load();
         });
     </script>

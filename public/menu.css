@@ -100,9 +100,24 @@ header {
 }
 #thermometre
 {
-
+    font-size: 110%;
+    padding-left: 17%;
+    
+}
+#temperature_value
+{
+    text-align: center;
 }
 #brightness
 {
     font-size: 93%;
+}
+#air_humidity
+{
+    text-align: center;
+    font-size: 120%;
+}
+#air_humidity_value
+{
+    text-align: center;
 }

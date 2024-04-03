@@ -40,10 +40,10 @@ server.listen(PORT, () => {
 
 //Constante 
 
-var stored_light_level = 0;
-var stored_temperature = 0;
-var stored_air_humidity = 0;
-var stored_dirt_humidity = 0;
+var stored_light_level = 3;
+var stored_temperature = 100;
+var stored_air_humidity = 100;
+var stored_dirt_humidity = 100;
 
 ///////////
 
@@ -96,6 +96,12 @@ const port = new SerialPort(
 
 buffer = '';
 
+
+port.on('error', (err) => {
+    console.error('Error opening serial port:', err.message);
+    console.log('Waiting for Arduino to connect...');
+});
+
 port.on('open', () => {
     console.log('Serial Port Open');
 });
@@ -128,9 +134,15 @@ function decypher_arduino(cmd)
             break;
         case 'temperature':
             send_temperature(parseFloat(cmd_parts[1]));
+            break;
         case 'air humidity':
-
+            send_air_humidity(parseInt(cmd_parts[1]));
+            break;
+        case 'dirt humidity':
+            send_dirt_humidity(parseFloat(cmd_parts[1]));
+            break;
         default:
+            console.log("Pas de commande reconnu\n");
             break;
     }
 }
