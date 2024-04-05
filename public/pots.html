@@ -16,23 +16,49 @@
         <button onclick="Charger_menu_pots()">Mon pot</button>
     </header>
 
-    <div class="container ascii">
-        <div class="box size-1-2">
+    <div class="overlay" id="overlay">
+        <div class="box" id="loader">
+            <p id="message">La patience est une vertu, surtout quand le server discute avec l'Arduino. <br>
+            On dirait qu'ils prennent leur temps pour décider qui est le chef de ce réseau !</h>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="box size-1-2 ascii">
             <div id="thermometre"></div>
             <div id="temperature_value"></div>
         </div>
-        <div class="box size-1-1">
+        <div class="box size-1-1 ascii">
             <div id="brightness"></div>
         </div>
-        <div class="box size-1-1">
+        <div class="box size-1-1 ascii">
             <div id="air_humidity"></div>
             <div id="air_humidity_value"></div>
         </div>
-        <div class="box size-1-1">
+        <div class="box size-1-1 ascii">
             <div id="dirt_humidity"></div>
             <div id="dirt_humidity_value"></div>
         </div>
-        <div class="box"></div>
+        <div class="box size-1-1">
+            <p>Motor Control Panel</p>
+            <input onclick="motor_manuel()" type="checkbox" id="motor_on_off" name="motor_on_off"/>
+            <label for="motor_on_off">Motor On / Off</label>
+            <input onclick="motor_manuel_auto()" type="checkbox" id="motor_auto" name="motor_auto"/>
+            <label for="motor_auto">Motor Auto</label>
+        </div>
+
+        <div class="box size-1-1">
+            <p>Arduino Control Panel</p>
+            <input onclick="arduino_change_active()" type="checkbox" id="activ_mode" name="activ_mode"/>
+            <label for="activ_mode">Active Mode</label>
+            <br>
+
+            <input onclick="change_screen_mode()" type="checkbox" id="screen_on_off" name="screen_on_off"/>
+            <label for="screen_on_off">Screen On / Off</label>
+
+            <p id="wattering_status"></p>
+        </div>
 
     </div>
 

@@ -38,7 +38,7 @@ button:hover {
 }
 
 .titre{
-    font-size: 200%;
+    font-size: 2vw;
     margin-top: 10%;
     margin-right: 10%;
     margin-left: 10%;
@@ -60,6 +60,7 @@ header {
     bottom: 0;
 }.container{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     margin-left: 4%;
     margin-right: 4%;
@@ -110,6 +111,7 @@ header {
 }
 #brightness
 {
+    margin-top: -24px;
     font-size: 93%;
 }
 #air_humidity
@@ -120,4 +122,40 @@ header {
 #air_humidity_value
 {
     text-align: center;
+}
+#dirt_humidity
+{
+    text-align: center;
+    font-size: 120%;
+}
+#dirt_humidity_value
+{
+    text-align: center;
+}
+
+#overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    background-color: #222B2FDD;
+}
+#loader 
+{
+    position: relative;
+    top: 30vh;
+    left: 20vw;
+    height: 40vh;
+    width: 60vw;
+    text-align: center;
+    font-family: monaco, monospace;
+
+}
+#message
+{
+    position: relative;
+    top: 12vh;
 }

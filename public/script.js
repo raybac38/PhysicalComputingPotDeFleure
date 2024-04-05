@@ -1,4 +1,4 @@
-light_level = 0;
+light_level = 4;
 temperature_level = 0;
 air_humidity_level = 0;
 dirt_humidity_level = 0;
@@ -22,7 +22,7 @@ function show_air_humidity_level_ui(level)
 {
     document.getElementById("air_humidity_value").innerText = "Air :" + level + "%";
 
-    code = Math.floor(level / 2);
+    code = Math.floor(level / 20);
 
     if(code < 0) code = 0;
     if(code > 4) code = 4;
@@ -162,3 +162,112 @@ socket.on('dirt_humidity', (data) =>
         console.log("mise a jours de L UI");
     }
 });
+
+socket.on('is_arduino_connected', (data) =>
+{
+    console.log("Etat de l'arduino : " + data);
+
+    if(data) 
+    {
+        //Elle est connecter
+        document.getElementById('overlay').style.display = "none";
+    }else
+    {
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+})
+
+socket.on('motor_on_off', (data) =>
+{
+    document.getElementById('motor_on_off').checked = data;
+})
+
+socket.on('motor_auto',(data) => 
+{
+    document.getElementById('motor_auto').checked = data;
+})
+
+socket.on('arrosage', (data) =>
+{
+
+    let watering_status = document.getElementById('wattering_status');
+    if(data == true)
+    {
+        watering_status.innerText = "Watering status : ON";
+    }
+    else
+    {
+        watering_status.innerText = "Watering status : OFF";
+    }
+})
+
+socket.on('is_active_mode', (data) =>
+{
+    document.getElementById('activ_mode').checked = data;
+})
+
+socket.on('is_lcd_on', (data) =>
+{
+    document.getElementById('screen_on_off').checked = data;
+
+})
+
+function arduino_change_active()
+{
+    let value = document.getElementById('activ_mode').checked;
+    if(value == true)
+    {
+        emit_commande("mode actif");
+    }
+    else
+    {
+        emit_commande("mode auto");
+    }
+}
+
+function motor_manuel()
+{
+    let value = document.getElementById('motor_on_off').checked;
+
+    if(value == true)
+    {
+        emit_commande("moteur on");
+    }
+    else
+    {
+        emit_commande("moteur off");
+    }
+}
+
+function motor_manuel_auto()
+{
+    let value = document.getElementById('motor_auto').checked;
+
+
+    if(value == true)
+    {
+        emit_commande("moteur auto");
+    }
+}
+
+function change_screen_mode()
+{
+    let value = document.getElementById('screen_on_off').checked;
+
+
+
+    if(value == true)
+    {
+        emit_commande("moteur on");
+    }
+    else
+    {
+        emit_commande("screen off")
+    }
+}
+
+function emit_commande(message)
+{
+    socket.emit('cmd_arduino', (message));
+}
